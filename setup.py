@@ -14,6 +14,7 @@ setup(
     download_url=
     'https://github.com/Rainbow-Dreamer/image_to_midi/archive/0.11.tar.gz',
     keywords=['music', 'image', 'midi'],
+    install_requires=['musicpy', 'pillow'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
