@@ -36,7 +36,7 @@
  
  Then we will talk about how to convert images to MIDI files using this package. You can use `image_to_midi` function to convert an image to a MIDI file.
  
- Note that the return value of this function is a musicpy's chord instance, and you can use musicpy's `write` function to write the return value to a MIDI file.
+ **Note: the return value of this function is a musicpy's chord instance, you can use musicpy's `write` function to write the return value to a MIDI file.**
  
  ```python
  image_to_midi(path,
