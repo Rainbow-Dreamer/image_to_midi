@@ -54,9 +54,9 @@
 
 * path: the file path of the image
 
-* direction: there are 3 direction modes: 0, 1, other values
-0: from left to right, used in daw representation
-1: from buttom to top, used in piano roll representation
+* direction: there are 3 direction modes: 0, 1, other values  
+0: from left to right, used in daw representation  
+1: from buttom to top, used in piano roll representation  
 other values: you can custom the rotation angle of the images and whether reverse the image ascii list and each line or not
 
 * max_keys: the maximum key number the MIDI file has, when converting the image, if the line has more pixels than this parameter, then the exceeded part will be cut off
@@ -77,7 +77,7 @@ other values: you can custom the rotation angle of the images and whether revers
 
 * each_line_reverse: when the parameter `direction` is set to a value that is not 0 or 1, you can set this value to specify whetehr to reverse each line of pixels of the image
 
-You can use musicpy's write function to write the return value of this function to a MIDI file.
+You can use musicpy's `write` function to write the return value of this function to a MIDI file.
 ```python
 result = image_to_midi('1.jpg')
 write(result, name='1.mid')
