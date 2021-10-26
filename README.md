@@ -102,4 +102,4 @@ im.write(result, name='1.mid')
 ## Some extra notes
 The default starting note pitch of the conversion is C0, which corresponds to MIDI note number 12. (If it starts from 0 then we will have some notes has pitch like `B-1`, which cannot be shown in most DAW and piano roll softwares)
 
-If you would like to fit the resulted MIDI files into a standard 88-keys piano which has pitch range A0 to C8, it is easy to set the `max_keys` parameter to 88 and the `start` parameter to `A0` when you are using `image_to_midi` function to get the desired result.
+If you would like to fit the resulted MIDI files into a standard 88-key piano which has pitch range A0 to C8, it is easy to set the `max_keys` parameter to 88 and the `start` parameter to `A0` when you are using `image_to_midi` function to get the desired result.
