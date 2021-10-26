@@ -14,7 +14,7 @@
  
  You can also choose to filter out the light colors you don't want to have in the resulted MIDI files according to a color depth tolerance.
  
- Note: Each pixel of the image will convert to a note with a MIDI channel based on its color depth, the lighter the pixel is, the smaller the MIDI channel number of the note it corresponds to is, you should customize the colors corresponding to MIDI channels 0 - 15 from lightest to deepest in order to get the best viewing result when you put the resulted MIDI files in DAW or piano roll software.
+ **Note: Each pixel of the image will convert to a note with a MIDI channel based on its color depth, the lighter the pixel is, the smaller the MIDI channel number of the note it corresponds to is, you should customize the colors corresponding to MIDI channels 0 - 15 from lightest to deepest in order to get the best viewing result when you put the resulted MIDI files in DAW or piano roll software.**
  ## Installation
  You can use pip to install this package, run this line in cmd/terminal to install.
  ```
@@ -29,8 +29,64 @@
  * image_width_ratio: the width resize ratio of the image. The default value is 1
  * image_height_ratio: the height resize ratio of the image. The default value is 1
  
- You can change these parameters by `set_value` function using keyword arguments.
+ You can change these parameters by `set_value` function using keyword arguments. For example,
  ```python
  set_value(resize_ratio=2)
  ```
  
+ Then we will talk about how to convert images to MIDI files using this package. You can use `image_to_midi` function to convert an image to a MIDI file.
+ 
+ Note that the return value of this function is a musicpy's chord instance, and you can use musicpy's `write` function to write the return value to a MIDI file.
+ 
+ ```python
+ image_to_midi(path,
+               direction=0,
+               max_keys=88,
+               line_interval=1 / 16,
+               remapping_colors=None,
+               filter_value=None,
+               extra_interval=0,
+               adjust_scale=None,
+               rotate=None,
+               whole_reverse=False,
+               each_line_reverse=False)
+
+# path: the file path of the image
+
+# direction: there are 3 direction modes: 0, 1, other values
+# 0: from left to right, used in daw representation
+# 1: from buttom to top, used in piano roll representation
+# other values: you can custom the rotation angle of the images and
+# whether reverse the image ascii list and each line or not
+
+# max_keys: the maximum key number the MIDI file has, when converting the image,
+# if the line has more pixels than this parameter, then the exceeded part will be cut off
+
+# line_interval: the duration of notes of each line of pixels of the image, the unit is bar of 4/4 time signature
+
+# remapping_colors: you can pass in a dictionary to remap the MIDI channel numbers to a new order of MIDI channel numbers
+
+# filter_value: you can set an index of the ASCII character set to filter out the ASCII characters to convert which index is after this value
+
+# extra_interval: you can set this value if you want to have extra spaces between each 2 adjacent lines of notes
+
+# adjust_scale: adjust the notes of each line of pixels to a scale like C major, D mixolydian,
+# it will filter out the notes that does not belong to the scale
+# of each line of notes, this value must be a musicpy's scale instance
+
+# rotate: when the parameter `direction` is set to a value that is not 0 or 1,
+# you can set this value to specify the rotation angle of the image to convert,
+# the rotation angle is clockwise for positive number, counterclockwise for negative number
+
+# whole_reverse: when the parameter `direction` is set to a value that is not 0 or 1,
+# you can set this value to specify whether to reverse the lines of pixels of the image
+
+# each_line_reverse: when the parameter `direction` is set to a value that is not 0 or 1,
+# you can set this value to specify whetehr to reverse each line of pixels of the image
+```
+
+You can use musicpy's write function to write the return value of this function to a MIDI file.
+```python
+result = image_to_midi('1.jpg')
+write(result, name='1.mid')
+```
