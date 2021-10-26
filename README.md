@@ -33,9 +33,13 @@
  This package uses a dictionary called `config_dict` to store the image conversion parameters, which are
  
  * ascii_character_set: The ASCII character set that ranges from deepest to lightest color depth. The default value is ``M@N%W$E#RK&FXYI*l]}1/+i>"!~\';,`:.``
+ 
  * resize_ratio: The resize ratio of the image to convert, could be an integer or a float, the smaller it is, the larger the image will be resized to, for example, 1 is for no resizing, 0.5 is for resize as 2 times large, 2 is for resize as 2 times small. The default value is 1
+ 
  * bit_number: The bit number the image will be converted as gray scales. The default value is 8
+ 
  * image_width_ratio: the width resize ratio of the image. The default value is 1
+ 
  * image_height_ratio: the height resize ratio of the image. The default value is 1
  
  You can change these parameters by updating the values of the corresponding key of `config_dict`. For example,
@@ -50,7 +54,7 @@
  ```python
  image_to_midi(path,
                direction=0,
-               max_keys=130,
+               max_keys=100,
                line_interval=1 / 16,
                remapping_colors=None,
                filter_value=None,
@@ -58,7 +62,8 @@
                adjust_scale=None,
                rotate=None,
                whole_reverse=False,
-               each_line_reverse=False)
+               each_line_reverse=False,
+               start='C0')
 ```
 
 * path: the file path of the image
@@ -86,6 +91,8 @@ other values: you can custom the rotation angle of the images and whether revers
 
 * each_line_reverse: when the parameter `direction` is set to a value that is not 0 or 1, you can set this value to specify whetehr to reverse each line of pixels of the image
 
+* start: the starting note pitch of the conversion, which is the lowest note pitch of the resulted chord type, could be a string that represents a note pitch like `A0`, `C1`, or an integer for MIDI note number
+
 You can use musicpy's `write` function to write the return value of this function to a MIDI file.
 ```python
 result = im.image_to_midi('1.jpg')
@@ -93,6 +100,6 @@ im.write(result, name='1.mid')
 ```
 
 ## Some extra notes
-The starting note pitch of the conversion is C0, which corresponds to MIDI note number 12. (If it starts from 0 then we will have some notes has pitch like `B-1`, which cannot be shown in most DAW and piano roll softwares)
+The default starting note pitch of the conversion is C0, which corresponds to MIDI note number 12. (If it starts from 0 then we will have some notes has pitch like `B-1`, which cannot be shown in most DAW and piano roll softwares)
 
-If you would like to fit the resulted MIDI files into a standard 88-keys piano which has pitch range A0 to C8, it is easy to firstly set the `max_key` parameter to 88 and then use `up` function of chord type of musicpy to shift the resulted chord type to be starting from A0, like `result = result.up(9)`, since the MIDI note number of A0 is 21.
+If you would like to fit the resulted MIDI files into a standard 88-keys piano which has pitch range A0 to C8, it is easy to set the `max_keys` parameter to 88 and the `start` parameter to `A0` when you are using `image_to_midi` function to get the desired result.
