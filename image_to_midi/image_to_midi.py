@@ -73,7 +73,7 @@ def img_to_ascii(path,
 
 def image_to_midi(path,
                   direction=0,
-                  max_keys=130,
+                  max_keys=100,
                   line_interval=1 / 16,
                   remapping_colors=None,
                   filter_value=None,
@@ -81,7 +81,8 @@ def image_to_midi(path,
                   adjust_scale=None,
                   rotate=None,
                   whole_reverse=False,
-                  each_line_reverse=False):
+                  each_line_reverse=False,
+                  start='C0'):
     # there are 3 direction modes: 0, 1, other values
 
     # 0: from left to right, used in daw representation
@@ -90,6 +91,8 @@ def image_to_midi(path,
 
     # other values: you can custom the rotation angle of the images and
     # whether reverse the image ascii list and each line or not
+    if type(start) == str:
+        start = N(start).degree
     ascii_character_set = config_dict['ascii_character_set']
     ascii_length = len(ascii_character_set)
     if remapping_colors:
@@ -117,7 +120,7 @@ def image_to_midi(path,
     for k in range(len(current_text_list)):
         each = current_text_list[k]
         if each:
-            current_line = [(ascii_character_set.index(each[i]), i)
+            current_line = [(ascii_character_set.index(each[i]), i + start)
                             for i in range(len(each))]
             if filter_value is not None:
                 current_line = [i for i in current_line if i[0] < filter_value]
