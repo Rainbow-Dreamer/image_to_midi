@@ -42,7 +42,7 @@
  
  * image_height_ratio: the height resize ratio of the image. The default value is 1
  
- You can change these parameters by updating the values of the corresponding key of `config_dict`. For example,
+ You can change these parameters by updating the values of the corresponding keys of `config_dict`. For example,
  ```python
  im.config_dict['resize_ratio'] = 2
  ```
@@ -73,7 +73,7 @@
 1: from buttom to top, used in piano roll representation  
 other values: you can custom the rotation angle of the images and whether reverse the image ascii list and each line or not
 
-* max_keys: the maximum key number the MIDI file has, when converting the image, if the line has more pixels than this parameter, then the exceeded part will be cut off
+* max_keys: the maximum key number the MIDI file has, when converting the image, if the line has more pixels than this parameter, then the excess part will be cut off
 
 * line_interval: the duration of notes of each line of pixels of the image, the unit is bar of 4/4 time signature
 
