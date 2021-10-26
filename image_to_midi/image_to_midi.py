@@ -1,42 +1,17 @@
 from musicpy import *
 from PIL import Image, ImageFont, ImageDraw, ImageTk
 
-ascii_character_set = 'M@N%W$E#RK&FXYI*l]}1/+i>"!~\';,`:.'
-resize_ratio = 1
-bit_number = 8
-image_width_ratio = 1
-image_height_ratio = 1
-colored_images = False
-
-available_parameters = [
-    'ascii_character_set', 'resize_ratio', 'bit_number', 'image_width_ratio',
-    'image_height_ratio', 'colored_images'
-]
-
-length = len(ascii_character_set)
-K = 2**bit_number
-unit = (K + 1) / length
+config_dict = {
+    'ascii_character_set': 'M@N%W$E#RK&FXYI*l]}1/+i>"!~\';,`:.',
+    'resize_ratio': 1,
+    'bit_number': 8,
+    'image_width_ratio': 1,
+    'image_height_ratio': 1,
+    'colored_images': False
+}
 
 
-def set_values(**kwargs):
-    for each in kwargs:
-        if each in available_parameters:
-            exec(f'global {each}', globals(), globals())
-            current_value = kwargs[each]
-            if type(current_value) == str:
-                current_value = f'"{current_value}"'
-            exec(f'{each} = {current_value}', globals(), globals())
-    global length
-    global K
-    global unit
-    length = len(ascii_character_set)
-    K = 2**bit_number
-    unit = (K + 1) / length
-
-
-def get_char(r, g, b, alpha=K):
-    if alpha == 0:
-        return " "
+def get_char(r, g, b, unit, ascii_character_set):
     gray = int(0.2126 * r + 0.7152 * g + 0.0722 * b)
     return ascii_character_set[int(gray / unit)]
 
@@ -47,6 +22,15 @@ def img_to_ascii(path,
                  rotate=0,
                  max_height=None,
                  max_width=None):
+    ascii_character_set = config_dict['ascii_character_set']
+    bit_number = config_dict['bit_number']
+    resize_ratio = config_dict['resize_ratio']
+    image_width_ratio = config_dict['image_width_ratio']
+    image_height_ratio = config_dict['image_height_ratio']
+    colored_images = config_dict['colored_images']
+    length = len(ascii_character_set)
+    K = 2**bit_number
+    unit = (K + 1) / length
     im = Image.open(path)
     if rotate != 0:
         im = im.rotate(-rotate, expand=True)
@@ -68,7 +52,7 @@ def img_to_ascii(path,
             for j in range(WIDTH):
                 pixel = im_resize.getpixel((j, i))
                 colors.append(pixel)
-                txt += get_char(*pixel)
+                txt += get_char(*pixel, unit, ascii_character_set)
             txt += '\n'
             colors.append((255, 255, 255))
         if output:
@@ -79,7 +63,7 @@ def img_to_ascii(path,
         for i in range(HEIGHT):
             for j in range(WIDTH):
                 pixel = im_resize.getpixel((j, i))
-                txt += get_char(*pixel)
+                txt += get_char(*pixel, unit, ascii_character_set)
             txt += '\n'
         if output:
             with open(name, 'w') as f:
@@ -87,12 +71,9 @@ def img_to_ascii(path,
         return txt
 
 
-ascii_length = len(ascii_character_set)
-
-
 def image_to_midi(path,
                   direction=0,
-                  max_keys=88,
+                  max_keys=130,
                   line_interval=1 / 16,
                   remapping_colors=None,
                   filter_value=None,
@@ -109,6 +90,8 @@ def image_to_midi(path,
 
     # other values: you can custom the rotation angle of the images and
     # whether reverse the image ascii list and each line or not
+    ascii_character_set = config_dict['ascii_character_set']
+    ascii_length = len(ascii_character_set)
     if remapping_colors:
         for i in range(16):
             if i not in remapping_colors:
