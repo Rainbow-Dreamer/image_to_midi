@@ -62,13 +62,17 @@
 # max_keys: the maximum key number the MIDI file has, when converting the image,
 # if the line has more pixels than this parameter, then the exceeded part will be cut off
 
-# line_interval: the duration of notes of each line of pixels of the image, the unit is bar of 4/4 time signature
+# line_interval: the duration of notes of each line of pixels of the image,
+# the unit is bar of 4/4 time signature
 
-# remapping_colors: you can pass in a dictionary to remap the MIDI channel numbers to a new order of MIDI channel numbers
+# remapping_colors: you can pass in a dictionary to remap the MIDI channel numbers
+# to a new order of MIDI channel numbers
 
-# filter_value: you can set an index of the ASCII character set to filter out the ASCII characters to convert which index is after this value
+# filter_value: you can set an index of the ASCII character set to filter out
+# the ASCII characters to convert which index is after this value
 
-# extra_interval: you can set this value if you want to have extra spaces between each 2 adjacent lines of notes
+# extra_interval: you can set this value if you want to have extra spaces
+# between each 2 adjacent lines of notes
 
 # adjust_scale: adjust the notes of each line of pixels to a scale like C major, D mixolydian,
 # it will filter out the notes that does not belong to the scale
