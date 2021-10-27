@@ -79,7 +79,7 @@ other values: you can custom the rotation angle of the images and whether revers
 
 * remapping_colors: you can pass in a dictionary to remap the MIDI channel numbers to a new order of MIDI channel numbers
 
-* filter_value: you can set an index of the ASCII character set to filter out the ASCII characters to convert which index is after this value
+* filter_value: you can set a tuple (or a list) `(a, b)` to filter the ASCII characters to convert which index at the ASCII character set satisfies `a <= index < b`
 
 * extra_interval: you can set this value if you want to have extra spaces between each 2 adjacent lines of notes
 
