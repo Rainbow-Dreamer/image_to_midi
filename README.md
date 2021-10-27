@@ -1,69 +1,69 @@
 # image_to_midi
- This is a python package that turns any images into MIDI files that views the same as them.
+This is a python package that turns any images into MIDI files that views the same as them.
  
- This package firstly convert the image to ASCII characters by pixels in terms of gray scale, and then convert each pixel of the image to a note with a MIDI channel (0 - 15) based on the color depth of the pixel, which is the places of the converted ASCII character of that pixel at the ASCII character set defined by the user. By default, the ASCII character set is sorted from highest to lowest density, in this standard, the deeper the color depth of a pixel is, the smaller the MIDI channel number of the note it corresponds to is. For example, the pixel with the lightest color of the image will map to MIDI channel 15, while the deepest color will map to MIDI channel 0.
+This package firstly convert the image to ASCII characters by pixels in terms of gray scale, and then convert each pixel of the image to a note with a MIDI channel (0 - 15) based on the color depth of the pixel, which is corresponding to the index of the converted ASCII character of that pixel at the ASCII character set defined by the user. By default, the ASCII character set is sorted from highest to lowest density, in this standard, the deeper the color depth of a pixel is, the smaller the MIDI channel number of the note is. For example, the pixel with the lightest color of the image will map to MIDI channel 15, while the deepest color will map to MIDI channel 0.
  
- The default ASCII character set is
- ```
- M@N%W$E#RK&FXYI*l]}1/+i>"!~\';,`:.
- ```
+The default ASCII character set is
+```
+M@N%W$E#RK&FXYI*l]}1/+i>"!~\';,`:.
+```
+
+You can customize the note interval between each pixel horizontally the unit is bar of 4/4 time signature.
+
+For the direction of the note transformation through the images, there are basically 2 directions, one is for viewing in a DAW, and the another one is for viewing in a piano roll software with a waterfall effect (dropping from the top). You can also customize the rotation angle of the image to transform, together with whether to flip the image or not.
+
+You can also choose to filter out the light colors you don't want to have in the resulted MIDI files according to a color depth tolerance.
+
+**Note: Each pixel of the image will convert to a note with a MIDI channel based on its color depth, the deeper the pixel's color depth is, the smaller the MIDI channel number of the note it corresponds to is, you should customize the colors corresponding to MIDI channels 0 - 15 from deepest to lightest in order to get the best viewing result when you put the resulted MIDI files in DAW or piano roll software.**
+
+## Installation
+You can use pip to install this package, run this line in cmd/terminal to install.
+```
+pip install image_to_midi
+```
  
- You can customize the note interval between each pixel horizontally the unit is bar of 4/4 time signature.
- 
- For the direction of the note transformation through the images, there are basically 2 directions, one is for viewing in a DAW, and the another one is for viewing in a piano roll software with a waterfall effect (dropping from the top). You can also customize the rotation angle of the image to transform, together with whether to flip the image or not.
- 
- You can also choose to filter out the light colors you don't want to have in the resulted MIDI files according to a color depth tolerance.
- 
- **Note: Each pixel of the image will convert to a note with a MIDI channel based on its color depth, the deeper the pixel's color depth is, the smaller the MIDI channel number of the note it corresponds to is, you should customize the colors corresponding to MIDI channels 0 - 15 from deepest to lightest in order to get the best viewing result when you put the resulted MIDI files in DAW or piano roll software.**
- 
- ## Installation
- You can use pip to install this package, run this line in cmd/terminal to install.
- ```
- pip install image_to_midi
- ```
- 
- ## Importing
- ```python
- import image_to_midi as im
- ```
- 
- ## Usage
- Firstly we will talk about the conversion parameters of this pacakge.
- 
- This package uses a dictionary called `config_dict` to store the image conversion parameters, which are
- 
- * ascii_character_set: The ASCII character set that ranges from deepest to lightest color depth. The default value is ``M@N%W$E#RK&FXYI*l]}1/+i>"!~\';,`:.``
- 
- * resize_ratio: The resize ratio of the image to convert, could be an integer or a float, the smaller it is, the larger the image will be resized to, for example, 1 is for no resizing, 0.5 is for resize as 2 times large, 2 is for resize as 2 times small. The default value is 1
- 
- * bit_number: The bit number the image will be converted as gray scales. The default value is 8
- 
- * image_width_ratio: the width resize ratio of the image. The default value is 1
- 
- * image_height_ratio: the height resize ratio of the image. The default value is 1
- 
- You can change these parameters by updating the values of the corresponding keys of `config_dict`. For example,
- ```python
- im.config_dict['resize_ratio'] = 2
- ```
- 
- Then we will talk about how to convert images to MIDI files using this package. You can use `image_to_midi` function to convert an image to a MIDI file.
- 
- **Note: the return value of this function is a musicpy's chord instance, you can use musicpy's `write` function to write the return value to a MIDI file.**
- 
- ```python
- image_to_midi(path,
-               direction=0,
-               max_keys=100,
-               line_interval=1 / 16,
-               remapping_colors=None,
-               filter_value=None,
-               extra_interval=0,
-               adjust_scale=None,
-               rotate=None,
-               whole_reverse=False,
-               each_line_reverse=False,
-               start='C0')
+## Importing
+```python
+import image_to_midi as im
+```
+
+## Usage
+Firstly we will talk about the conversion parameters of this pacakge.
+
+This package uses a dictionary called `config_dict` to store the image conversion parameters, which are
+
+* ascii_character_set: The ASCII character set that ranges from deepest to lightest color depth. The default value is ``M@N%W$E#RK&FXYI*l]}1/+i>"!~\';,`:.``
+
+* resize_ratio: The resize ratio of the image to convert, could be an integer or a float, the smaller it is, the larger the image will be resized to, for example, 1 is for no resizing, 0.5 is for resize as 2 times large, 2 is for resize as 2 times small. The default value is 1
+
+* bit_number: The bit number the image will be converted as gray scales. The default value is 8
+
+* image_width_ratio: the width resize ratio of the image. The default value is 1
+
+* image_height_ratio: the height resize ratio of the image. The default value is 1
+
+You can change these parameters by updating the values of the corresponding keys of `config_dict`. For example,
+```python
+im.config_dict['resize_ratio'] = 2
+```
+
+Then we will talk about how to convert images to MIDI files using this package. You can use `image_to_midi` function to convert an image to a MIDI file.
+
+**Note: the return value of this function is a musicpy's chord instance, you can use musicpy's `write` function to write the return value to a MIDI file.**
+
+```python
+image_to_midi(path,
+              direction=0,
+              max_keys=100,
+              line_interval=1 / 16,
+              remapping_colors=None,
+              filter_value=None,
+              extra_interval=0,
+              adjust_scale=None,
+              rotate=None,
+              whole_reverse=False,
+              each_line_reverse=False,
+              start='C0')
 ```
 
 * path: the file path of the image
