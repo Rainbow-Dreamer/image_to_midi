@@ -8,11 +8,7 @@ The default ASCII character set is
 M@N%W$E#RK&FXYI*l]}1/+i>"!~\';,`:.
 ```
 
-You can customize the note interval between each pixel horizontally the unit is bar of 4/4 time signature.
-
 For the direction of the note transformation through the images, there are basically 2 directions, one is for viewing in a DAW, and the another one is for viewing in a piano roll software with a waterfall effect (dropping from the top). You can also customize the rotation angle of the image to transform, together with whether to flip the image or not.
-
-You can also choose to filter out the light colors you don't want to have in the resulted MIDI files according to a color depth tolerance.
 
 **Note: Each pixel of the image will convert to a note with a MIDI channel based on its color depth, the deeper the pixel's color depth is, the smaller the MIDI channel number of the note it corresponds to is, you should customize the colors corresponding to MIDI channels 0 - 15 from deepest to lightest in order to get the best viewing result when you put the resulted MIDI files in DAW or piano roll software.**
 
@@ -103,3 +99,5 @@ im.write(result, name='1.mid')
 The default starting note pitch of the conversion is C0, which corresponds to MIDI note number 12. (If it starts from 0 then we will have some notes has pitch like `B-1`, which cannot be shown in most DAW and piano roll softwares)
 
 If you would like to fit the resulted MIDI files into a standard 88-key piano which has pitch range A0 to C8, it is easy to set the `max_keys` parameter to 88 and the `start` parameter to `A0` when you are using `image_to_midi` function to get the desired result.
+
+You can also concatenate multiple resulted chord types converted from different images to output MIDI files with multiple viewable images. The syntax of concatenating 2 chord types is `chord_c = chord_a | chord_b`, to concatenate a list of chord types, you can write `chord_c = im.concat(list_of_chord_types, mode='|')`
