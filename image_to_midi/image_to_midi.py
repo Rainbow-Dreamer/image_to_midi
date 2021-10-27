@@ -123,7 +123,11 @@ def image_to_midi(path,
             current_line = [(ascii_character_set.index(each[i]), i + start)
                             for i in range(len(each))]
             if filter_value is not None:
-                current_line = [i for i in current_line if i[0] < filter_value]
+                lower_bound, upper_bound = filter_value
+                current_line = [
+                    i for i in current_line
+                    if lower_bound <= i[0] < upper_bound
+                ]
                 if not current_line:
                     if result.interval:
                         result.interval[-1] += line_interval + extra_interval
