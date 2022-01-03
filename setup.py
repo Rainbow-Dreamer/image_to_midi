@@ -4,7 +4,7 @@ from os import path
 setup(
     name='image_to_midi',
     packages=['image_to_midi'],
-    version='0.18',
+    version='0.19',
     license='LGPLv2.1',
     description=
     'This is a python package that turns any images into MIDI files that views the same as them',
@@ -12,7 +12,7 @@ setup(
     author_email='1036889495@qq.com',
     url='https://github.com/Rainbow-Dreamer/image_to_midi',
     download_url=
-    'https://github.com/Rainbow-Dreamer/image_to_midi/archive/0.18.tar.gz',
+    'https://github.com/Rainbow-Dreamer/image_to_midi/archive/0.19.tar.gz',
     keywords=['music', 'image', 'midi'],
     install_requires=['musicpy', 'pillow'],
     classifiers=[

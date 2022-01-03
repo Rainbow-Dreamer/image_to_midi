@@ -50,7 +50,7 @@ def img_to_ascii(path,
         colors = []
         for i in range(HEIGHT):
             for j in range(WIDTH):
-                pixel = im_resize.getpixel((j, i))
+                pixel = im_resize.getpixel((j, i))[:3]
                 colors.append(pixel)
                 txt += get_char(*pixel, unit, ascii_character_set)
             txt += '\n'
@@ -62,7 +62,7 @@ def img_to_ascii(path,
     else:
         for i in range(HEIGHT):
             for j in range(WIDTH):
-                pixel = im_resize.getpixel((j, i))
+                pixel = im_resize.getpixel((j, i))[:3]
                 txt += get_char(*pixel, unit, ascii_character_set)
             txt += '\n'
         if output:
