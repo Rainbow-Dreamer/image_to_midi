@@ -36,7 +36,7 @@ def img_to_ascii(path,
         im = im.rotate(-rotate, expand=True)
     WIDTH = int((im.width * image_width_ratio / 6) / resize_ratio)
     HEIGHT = int((im.height * image_height_ratio / 12) / resize_ratio)
-    im_resize = im.resize((WIDTH, HEIGHT), Image.ANTIALIAS)
+    im_resize = im.resize((WIDTH, HEIGHT), Image.Resampling.LANCZOS)
     txt = ""
     if max_height:
         HEIGHT = min(HEIGHT, max_height)
